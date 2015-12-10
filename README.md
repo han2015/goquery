@@ -55,7 +55,7 @@ jQuery often has many variants for the same function (no argument, a selector st
 *    The signatures accepting a DOM element as argument in jQuery are defined in goquery as `XxxNodes()` and take a variadic argument of type `*html.Node` (e.g.: `FilterNodes()`)
 *    The signatures accepting a function as argument in jQuery are defined in goquery as `XxxFunction()` and take a function as argument (e.g.: `FilterFunction()`)
 *    The goquery methods that can be called with a selector string have a corresponding version that take a `Matcher` interface and are defined as `XxxMatcher()` (e.g.: `IsMatcher()`)
-
+*   Add SetText method to update Content.
 The complete [godoc reference documentation can be found here][doc].
 
 Please note that Cascadia's selectors do not necessarily match all supported selectors of jQuery (Sizzle). See the [cascadia project][cascadia] for details.
@@ -86,6 +86,8 @@ func ExampleScrape() {
     band := s.Find("h3").Text()
     title := s.Find("i").Text()
     fmt.Printf("Review %d: %s - %s\n", i, band, title)
+    s.Find("1").SetText("set something")
+    fmt.Println(s.Find("1").Text())
   })
 }
 

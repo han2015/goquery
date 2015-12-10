@@ -69,6 +69,13 @@ func (s *Selection) Text() string {
 	return buf.String()
 }
 
+//// SetText sets the given Content value on each element in the set of matched elements.
+func (s *Selection) SetText(value string) {
+	for _, n := range s.Nodes {
+		setNodeText(n, value)
+	}
+}
+
 // Size is an alias for Length.
 func (s *Selection) Size() int {
 	return s.Length()
@@ -206,6 +213,17 @@ func getNodeText(node *html.Node) string {
 	}
 
 	return ""
+}
+
+// Set the specified node's text content!
+func setNodeText(node *html.Node, value string) {
+	if node.Type == html.TextNode {
+		node.Data = value
+	} else if node.FirstChild != nil {
+		for c := node.FirstChild; c != nil; c = c.NextSibling {
+			setNodeText(c, value)
+		}
+	}
 }
 
 func getAttributePtr(attrName string, n *html.Node) *html.Attribute {
